@@ -81,5 +81,35 @@ int main()
 			char messages2[1000]; int size=0; 
 			int binary_number=0;
 	        int k=9;
+			for (int i = 0; i < bmiHeader.biWidth ; i++) 
+			{   
+				for (int j = 0; j < bmiHeader.biHeight; j++)
+				{ 
+					fread(&rgb, sizeof(rgb),1, file2);
+					if(!k)
+					{
+						int number_ascii=0; int power=0; 
+						while(binary_number)
+						{
+							number_ascii+=binary_number%10*pow(2,power); power++;
+							binary_number/=10;
+						}
+						k=9;
+						messages2[size]=(char)(number_ascii); size++;
+					}
+					binary_number=binary_number*10+rgb.rgbtBlue%2;
+					k--;
+					if(messages2[size-1]=='!') break;
+				}   
+				if(messages2[size-1]=='!') break;
+			}      
+			cout<<endl<<"Messages: "<<endl;
+			for(int i=0; i<size; i++)
+			{
+				cout<<messages2[i];
+			}
+                        fcloseall();
+			cout<<endl<<"Decoded!!!"<<endl;
+		}
                  }
 }
