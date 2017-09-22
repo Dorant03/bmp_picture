@@ -1,4 +1,4 @@
-#include<iostream>
+﻿#include<iostream>
 #include <windows.h>;
 #include <string>
  using namespace std;
@@ -70,6 +70,14 @@ int main()
                         fcloseall();
 			cout<<endl<<"Decoded!!!"<<endl;
 		}
+                if(choice==2)
+		{
+			file2 = fopen("file1.bmp", "r+b");
+			fread(&header,sizeof(header),1,file2);             
+			fread(&bmiHeader,sizeof(bmiHeader),1,file2);   
+			char messages2[1000]; int size=0; 
+			int binary_number=0;
+	        int k=9;
                 }
                 }
 }
