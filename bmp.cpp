@@ -4,13 +4,12 @@
  using namespace std;
 
 int main()
-{   
-        // Ñòðóêòóðè ôàéëà
+{  
         BITMAPFILEHEADER header;
         BITMAPINFOHEADER bmiHeader;
-		//äàí³ ïðî ï³êñåë³
+		//дані про пікселі
         RGBTRIPLE rgb; 
-		//ôàéëè äëÿ ÷èòàííÿ ³ çàïèñó
+		//файли для читання і запису
         FILE * file1, * file2;
  
 		cout<<"Menu:"<<endl;
@@ -19,7 +18,7 @@ int main()
         
 		int choice=1;
 
-                while(choice)
+		while(choice)
 		{
 		cout<<"Your choice: "; cin>>choice;
 		if(choice==1)
@@ -27,9 +26,9 @@ int main()
 			file1 = fopen("file.bmp", "r+b");
             file2 = fopen("file1.bmp", "w+b");
 
-			fread(&header,sizeof(header),1,file1);                     //ôàéëîâèé çàãîëîâîê(BITMAPFILEHEADER)
+			fread(&header,sizeof(header),1,file1);                     //файловий заголовок(BITMAPFILEHEADER)
             fwrite(&header, sizeof(header), 1, file2);  
-            fread(&bmiHeader,sizeof(bmiHeader),1,file1);               //çàãîëîâîê çîáðàæåííÿ(BITMAPINFOHEADER)
+            fread(&bmiHeader,sizeof(bmiHeader),1,file1);               //заголовок зображення(BITMAPINFOHEADER)
             fwrite(&bmiHeader, sizeof(bmiHeader), 1, file2);  
 
 		    string messages;
@@ -40,7 +39,7 @@ int main()
 		    int len=messages.size(); int size=len;
 		    int k=8;
 		    int number_ascii=(int)(messages[len-size]);
-			for(int i=0;i< bmiHeader.biWidth;i++)     //bmiHeader.biWidth
+            for(int i=0;i< bmiHeader.biWidth;i++)     //bmiHeader.biWidth
             {
                 for (int j = 0; j < bmiHeader.biHeight; j++)   //bmiHeader.biHeight
                 {
@@ -69,11 +68,10 @@ int main()
 					    fwrite(&rgb, sizeof(rgb), 1, file2);
 				}
 			}
-                fcloseall();
+		fcloseall();
 		cout<<"Encoded!!!"<<endl;
-			
-                }
-                if(choice==2)
+		}
+		if(choice==2)
 		{
 			file2 = fopen("file1.bmp", "r+b");
 			fread(&header,sizeof(header),1,file2);             
@@ -107,9 +105,11 @@ int main()
 			for(int i=0; i<size; i++)
 			{
 				cout<<messages2[i];
-			}
-                        fcloseall();
+			}  
+			fcloseall();
 			cout<<endl<<"Decoded!!!"<<endl;
 		}
-                 }
+		}
+		cout<<"END"<<endl;
+   return 0;
 }
