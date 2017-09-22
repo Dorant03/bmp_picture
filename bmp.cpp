@@ -5,12 +5,12 @@
 
 int main()
 {   
-        // Структури файла
+        // Г‘ГІГ°ГіГЄГІГіГ°ГЁ ГґГ Г©Г«Г 
         BITMAPFILEHEADER header;
         BITMAPINFOHEADER bmiHeader;
-		//дані про пікселі
+		//Г¤Г Г­Ві ГЇГ°Г® ГЇВіГЄГ±ГҐГ«Ві
         RGBTRIPLE rgb; 
-		//файли для читання і запису
+		//ГґГ Г©Г«ГЁ Г¤Г«Гї Г·ГЁГІГ Г­Г­Гї Ві Г§Г ГЇГЁГ±Гі
         FILE * file1, * file2;
  
 		cout<<"Menu:"<<endl;
@@ -27,9 +27,9 @@ int main()
 			file1 = fopen("file.bmp", "r+b");
             file2 = fopen("file1.bmp", "w+b");
 
-			fread(&header,sizeof(header),1,file1);                     //файловий заголовок(BITMAPFILEHEADER)
+			fread(&header,sizeof(header),1,file1);                     //ГґГ Г©Г«Г®ГўГЁГ© Г§Г ГЈГ®Г«Г®ГўГ®ГЄ(BITMAPFILEHEADER)
             fwrite(&header, sizeof(header), 1, file2);  
-            fread(&bmiHeader,sizeof(bmiHeader),1,file1);               //заголовок зображення(BITMAPINFOHEADER)
+            fread(&bmiHeader,sizeof(bmiHeader),1,file1);               //Г§Г ГЈГ®Г«Г®ГўГ®ГЄ Г§Г®ГЎГ°Г Г¦ГҐГ­Г­Гї(BITMAPINFOHEADER)
             fwrite(&bmiHeader, sizeof(bmiHeader), 1, file2);  
 
 		    string messages;
@@ -40,6 +40,36 @@ int main()
 		    int len=messages.size(); int size=len;
 		    int k=8;
 		    int number_ascii=(int)(messages[len-size]);
+			for (int i = 0; i < bmiHeader.biWidth ; i++) 
+			{   
+				for (int j = 0; j < bmiHeader.biHeight; j++)
+				{ 
+					fread(&rgb, sizeof(rgb),1, file2);
+					if(!k)
+					{
+						int number_ascii=0; int power=0; 
+						while(binary_number)
+						{
+							number_ascii+=binary_number%10*pow(2,power); power++;
+							binary_number/=10;
+						}
+						k=9;
+						messages2[size]=(char)(number_ascii); size++;
+					}
+					binary_number=binary_number*10+rgb.rgbtBlue%2;
+					k--;
+					if(messages2[size-1]=='!') break;
+				}   
+				if(messages2[size-1]=='!') break;
+			}      
+			cout<<endl<<"Messages: "<<endl;
+			for(int i=0; i<size; i++)
+			{
+				cout<<messages2[i];
+			}
+                        fcloseall();
+			cout<<endl<<"Decoded!!!"<<endl;
+		}
                 }
                 }
 }
